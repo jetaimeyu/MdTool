@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class MainFactory extends Model
 {
     //
+    public  $fillable=[
+        'Name','CompID','Status'
+    ];
     public function supplies()
     {
         return $this->hasMany('App\Models\Supply', 'MainFactoryCompID', 'CompID');

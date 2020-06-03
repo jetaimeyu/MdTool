@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Member\ImportAction;
 use App\Models\MainFactory;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -25,16 +26,16 @@ class MainFactoryController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new MainFactory());
-        $grid->tools(function ($tools) {
-            $tools->append(new ExcelImport());
-        });
         $grid->column('id', __('Id'));
         $grid->column('Name', __('Name'));
         $grid->column('CompID', __('CompID'));
         $grid->column('Status', __('Status'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-
+        // 添加到列表上
+        $grid->tools(function (Grid\Tools $tools) {
+            $tools->append(new ImportAction());
+        });
         return $grid;
     }
 
