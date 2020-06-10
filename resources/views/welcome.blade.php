@@ -83,6 +83,12 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                <form action="{{url('importTest')}}" method="post" enctype="multipart/form-data">
+                    @method('get')
+                    @csrf
+                    <input type="file" multiple="multiple" name="ccfile" id="ccfile" onchange="">
+                    <button type="submit">提交</button>
+                </form>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>

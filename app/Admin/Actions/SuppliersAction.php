@@ -1,51 +1,44 @@
 <?php
 
-namespace App\Admin\Actions\Member;
+namespace App\Admin\Actions;
 
-use App\Imports\Member\ImportMainFactory;
-use App\Models\MainFactory;
+use App\Imports\SuppliersImport;
 use Encore\Admin\Actions\Action;
-use Encore\Admin\Admin;
-use Encore\Admin\Form;
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Excel;
+use mysql_xdevapi\Exception;
 
-class ImportAction extends Action
+class SuppliersAction extends Action
 {
-   public $name = '主机厂导入';
-    protected $selector = '.import-action';
-    public function model(array $row)
-    {
-        return new MainFactory();
-    }
+    public $name = '供应商导入';
+    protected $selector = '.suppliers-action';
+
     public function handle(Request $request)
     {
-        // $request ...
-        try {
-            $file = $request->mainfile;
-            Excel::import(new ImportMainFactory(), $file);
+        try{
+            $file = $request->file('supplyFile');
+            // $request ...
+            \Maatwebsite\Excel\Facades\Excel::import(new SuppliersImport(), $file);
             return $this->response()->success('数据导入成功')->refresh();
-        } catch (\Exception $ex) {
-            return $this->response()->error($ex->getMessage());
+        }catch (Exception $exception){
+            return $this->response()->success('数据导入成功')->refresh();
         }
+
     }
 
     public function html()
     {
         return <<<HTML
-        <a class="btn btn-sm btn-default import-action">导入</a>
+        <a class="btn btn-sm btn-default suppliers-action">供应商导入</a>
 HTML;
     }
 
     public function form()
     {
-        $this->file('mainfile', '请选择文件')->options(['showPreview' => false, 'allowedFileExtensions'=>['xlsx','xls'],'showUpload'=>false]);
+        $this->file('supplyFile', '请选择文件')->options(['showPreview' => false]);
     }
 
-    /**
-     * 上传等待
-     * @return string
-     */
     public function handleActionPromise()
     {
         $resolve = <<<SCRIPT
@@ -95,7 +88,7 @@ var actionResolverss = function (data) {
         };
 SCRIPT;
 
-        Admin::script($resolve);
+        \Encore\Admin\Admin::script($resolve);
 
         return <<<SCRIPT
          $('.modal-footer').hide()
@@ -104,5 +97,4 @@ SCRIPT;
 process.then(actionResolverss).catch(actionCatcherss);
 SCRIPT;
     }
-
 }

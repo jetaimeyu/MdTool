@@ -3,16 +3,18 @@
 namespace App\Imports\Member;
 
 use App\Models\MainFactory;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
 class ImportMainFactory implements ToModel,WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     * //    */
     public function model(array $row)
     {
         return new MainFactory([
@@ -21,12 +23,9 @@ class ImportMainFactory implements ToModel,WithStartRow
             'Status'=>$row[2]
         ]);
     }
-    /**
-     * 从第几行开始处理数据 就是不处理标题
-     * @return int
-     */
-    public function startRow(): int
+
+    public function startRow():int
     {
-       return 1;
+        return 2;
     }
 }

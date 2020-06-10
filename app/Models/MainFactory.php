@@ -10,7 +10,8 @@ class MainFactory extends Model
     public  $fillable=[
         'Name','CompID','Status'
     ];
-    public function supplies()
+
+    public function suppliers()
     {
         return $this->hasMany('App\Models\Supply', 'MainFactoryCompID', 'CompID');
     }
