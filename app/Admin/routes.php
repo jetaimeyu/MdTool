@@ -12,7 +12,6 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('home');
-
     $router->resource('main-factories', MainFactoryController::class);
     $router->resource('supplies', SupplyController::class);
     $router->resource('details', DetailController::class);

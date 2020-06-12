@@ -18,7 +18,12 @@ class MainFactoryController extends AdminController
      *
      * @var string
      */
-    protected $title = 'MainFactory';
+    protected $title = '主机厂';
+    protected $description = [
+        'index' => '列表页面',
+        'edit' => '编辑页面',
+        'create' => '新建页面',
+    ];
 
     /**
      * Make a grid builder.
@@ -29,30 +34,29 @@ class MainFactoryController extends AdminController
     {
         $grid = new Grid(new MainFactory());
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('Name', __('Name'))->expand(function ($model){
-            $comments = $model->suppliers->take(10)->map(function ($supply) {
-                return $supply->only(['SupplyName','SupplyNumber']);
-            });
-            return new Table(['SupplyName','SupplyNumber'], $comments->toArray());
-        });
-        $grid->column('CompID', __('CompID'));
+        $grid->column('Name', '企业名称');
+        $grid->column('CompID', '企业ID');
         $grid->column('Status', __('Status'));
-        $grid->column('created_at', __('Created at'))->display(function ($created_at){
+        $grid->column('updated_at', '修改时间')->display(function ($created_at) {
             return Carbon::createFromTimeString($created_at)->format('Y-m-d H:i:s');
         });
-//        $grid->column('updated_at', __('Updated at'));
         // 添加到列表上
         $grid->tools(function (Grid\Tools $tools) {
             $tools->append(new ImportAction());
         });
-        $grid->filter(function($filter){
-
+        $grid->filter(function ($filter) {
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
-
             // 在这里添加字段过滤器
             $filter->like('Name', 'Name');
-
+        });
+        $grid->actions(function ($actions) {
+            // 去掉删除
+            $actions->disableDelete();
+            // 去掉编辑
+            //$actions->disableEdit();
+            // 去掉查看
+            $actions->disableView();
         });
         return $grid;
     }
@@ -66,7 +70,6 @@ class MainFactoryController extends AdminController
     protected function detail($id)
     {
         $show = new Show(MainFactory::findOrFail($id));
-
         $show->field('id', __('Id'));
         $show->field('Name', __('Name'));
         $show->field('CompID', __('CompID'));
@@ -85,9 +88,8 @@ class MainFactoryController extends AdminController
     protected function form()
     {
         $form = new Form(new MainFactory());
-
-        $form->text('Name', __('Name'));
-        $form->number('CompID', __('CompID'));
+        $form->text('Name', __('企业名称'));
+        $form->number('CompID', __('企业ID'));
         $form->number('Status', __('Status'));
 
         return $form;

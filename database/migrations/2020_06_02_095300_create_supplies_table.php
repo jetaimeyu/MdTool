@@ -19,7 +19,7 @@ class CreateSuppliesTable extends Migration
             $table->string('SupplyNumber')->comment('供应商编号');
             $table->string('SupplyItemID')->comment('供应商ID');
             $table->smallInteger('Status')->comment('状态');
-            $table->integer("MainFactoryCompID")->comment('主机厂ID企业');
+            $table->integer("MainFactoryCompID")->comment('主机厂企业ID');
             $table->timestamps();
         });
     }

@@ -11,7 +11,12 @@ class Supply extends Model
         'SupplyNumber',
         'SupplyItemID',
         'Status',
-        'MainFactoryCompID'
+        'MainFactoryCompID',
+        'Supporter',
+        'SupporterType',
+        'IsUsed',
+        'Note',
+        'SupplyCompID'
     ];
 
     //

@@ -14,18 +14,6 @@ class HomeController extends Controller
     //
     public function index()
     {
-        $mainFactory = MainFactory::find(31);
-        var_dump($mainFactory->suppliers);
-      
-        $mainFactory->each(function ($model){
-              dd(1);
-            return $model->Name;
-        });
-        dd($mainFactory);
-        $mainFactory->suppliers()->map(function ($item){
-            var_dump($item);
-        });
-    dd($mainFactory->suppliers);
         return view('welcome');
     }
 
