@@ -14,7 +14,7 @@ class HomeController extends Controller
     //
     public function index()
     {
-        return view('welcome');
+        return "暂未开放";
     }
 
     public function importTest(Request $request)
