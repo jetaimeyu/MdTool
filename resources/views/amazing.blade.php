@@ -64,7 +64,7 @@
 <div class="flex-center position-ref full-height">
     <div class="content">
         <div class="links">
-            保温杯里泡枸杞 O(∩_∩)O哈哈~
+            主页
         </div>
     </div>
 </div>
