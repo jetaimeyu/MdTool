@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index');
 
 Route::get('importTest', 'HomeController@importTest')->name('importTest');
+
+//Route::get('/supply/{supply}', 'HomeController@supply');
+
+
+Route::resource('supply', 'HomeController');
+
+Route::fallback(function() {
+    abort(404);
+});
