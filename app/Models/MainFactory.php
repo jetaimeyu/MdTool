@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MainFactory extends Model
+class MainFactory extends BaseModel
 {
     //
     public  $fillable=[
