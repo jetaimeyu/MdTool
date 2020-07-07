@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\JsonResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use JsonResponse;
     /**
      * A list of the exception types that are not reported.
      *
@@ -51,7 +53,18 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
 
-//        return response()->json(['code'=>0, 'message'=> $exception->getMessage()]);
+        //如果接口是api请求
+        if ($request->is('api/*')) {
+//            if ($exception instanceof \Illuminate\Validation\ValidationException) {
+//                $result = [
+//                    'message' => $exception->getMessage()
+//                ];
+//                return response()->json($result);
+//            }
+            return $this->jsonFail($exception->getMessage());
+//            return response()->json(['message'=>$exception->getMessage()], 403);
+        }
         return parent::render($request, $exception);
+
     }
 }

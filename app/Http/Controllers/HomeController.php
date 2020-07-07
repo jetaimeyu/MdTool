@@ -15,6 +15,8 @@ class HomeController extends Controller
 
     public function index()
     {
+        $supplies =  Supply::paginate(1);
+        //return $this->jsonSuccess($supplies->toArray()) ;
         return "暂未开放";
     }
 
