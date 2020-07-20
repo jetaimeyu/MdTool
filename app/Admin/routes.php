@@ -15,5 +15,6 @@ Route::group([
     $router->resource('main-factories', MainFactoryController::class);
     $router->resource('supplies', SupplyController::class);
     $router->resource('details', DetailController::class);
+    $router->resource('goods-categories', CategoriesController::class);
 
 });
